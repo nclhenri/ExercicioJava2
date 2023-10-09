@@ -1,2 +1,6 @@
-package PACKAGE_NAME;public class Endereco {
+public class Endereco {
+    public String logradouro;
+    public int numero;
+    public boolean endComercial;
+
 }
