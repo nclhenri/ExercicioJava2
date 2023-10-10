@@ -7,7 +7,11 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         ArrayList<PessoaFisica> listaPf = new ArrayList<>();
+        ArrayList<PessoaJuridica> listaPj = new ArrayList<>();
+
+
         PessoaFisica metodoPf = new PessoaFisica();
+        PessoaJuridica metodoPj = new PessoaJuridica();
 
 
         System.out.println("Bem vindo ao sistema de cadastro de Pessoas Físicas e Jurídicas.");
@@ -51,9 +55,9 @@ public class Main {
 
                                 Period idade = Period.between(novaPf.dataNasc, LocalDate.now());
 
-                                if (idade.getYears() >= 18){
+                                if (idade.getYears() >= 18) {
                                     System.out.println("Idade válida!");
-                                }else{
+                                } else {
                                     System.out.println("Idade inválida!");
                                     break;
                                 }
@@ -118,8 +122,68 @@ public class Main {
                     break;
 
                 case "2":
-                    ;
-                    System.out.println("case2");
+                    String opcaoPj;
+
+                    do {
+                        System.out.println("Digite uma opção: 1 - Cadastrar PJ / 2 - Listar PJ / 0 - Voltar");
+                        opcaoPj = leitor.nextLine();
+
+                        switch (opcaoPj){
+                            case "1":
+                                PessoaJuridica novaPj = new PessoaJuridica();
+                                Endereco novoEndPj = new Endereco();
+
+                                System.out.println("Digite a razão social: ");
+                                novaPj.razaoSocial = leitor.nextLine();
+
+                                System.out.println("Digite o CNPJ: ");
+                                novaPj.cnpj = leitor.nextLine();
+
+                                System.out.println("Digite o rendimento: ");
+                                novaPj.rendimento = leitor.nextFloat();
+
+                                System.out.println("Digite o logradouro: ");
+                                novoEndPj.logradouro = leitor.next();
+
+                                System.out.println("Digite o número: ");
+                                novoEndPj.numero = leitor.nextInt();
+
+                                System.out.println("Este endereço é comercial? S/N: ");
+                                String endCom = leitor.next();
+                                if (endCom.equals("S") || endCom.equals("s")) {
+                                    novoEndPj.endComercial = true;
+                                } else {
+                                    novoEndPj.endComercial = false;
+                                }
+
+                                novaPj.endereco = novoEndPj;
+
+                                listaPj.add(novaPj);
+
+                                System.out.println("Cadastro realizado com sucesso!");
+                                break;
+
+                            case "2":
+                                if (listaPj.size() > 0) {
+
+                                    for (PessoaJuridica cadaPj : listaPj) {
+                                        System.out.println("Razão Social: " + cadaPj.razaoSocial);
+                                        System.out.println("CNPJ: " + cadaPj.cnpj);
+                                        System.out.println("Imposto a ser pago: " + metodoPj.CalcularImposto(cadaPj.rendimento));
+                                        System.out.println("Endereço: " + cadaPj.endereco.logradouro + "-" + cadaPj.endereco.numero);
+
+                                        System.out.println();
+                                        System.out.println("Aperte ENTER para continuar");
+                                        leitor.nextLine();
+
+                                    }
+
+                                } else {
+                                    System.out.println("Lista vazia!");
+                                }
+                                break;
+                        }
+                    }while(!opcaoPj.equals("0"));
                     break;
 
                 case "0":
